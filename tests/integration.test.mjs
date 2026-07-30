@@ -483,6 +483,50 @@ test('leaderboard: snapshots record the week-over-week delta', async () => {
   assert.equal(second.entries[0].points_delta, 50, 'delta is against the prior snapshot, not zero');
 });
 
+test('leaderboard: operators are excluded, by column and by allowlist', async () => {
+  const cohort = await seedCohort();
+  const [student, columnAdmin, envAdmin] = await enrolMembers(cohort, 3);
+
+  await query(`UPDATE members SET is_admin = true WHERE id = $1`, [columnAdmin.id]);
+  // ADMIN_EMAILS is 'admin@fgcu.edu' for this suite; grant it by address only,
+  // leaving is_admin false, to prove the allowlist is honoured too.
+  await query(`UPDATE members SET email = 'admin@fgcu.edu' WHERE id = $1`, [envAdmin.id]);
+
+  await submit(student, 3);
+  await recomputePoints(cohort.id);
+
+  const board = await getLeaderboard(cohort.id);
+  assert.deepEqual(board.map((r) => r.id), [student.id], 'only the student is ranked');
+
+  const studentStanding = await getStanding(student.id, cohort.id);
+  assert.equal(studentStanding.ranked, true);
+  assert.equal(studentStanding.rank, 1);
+  assert.equal(studentStanding.total, 1, 'operators do not inflate the cohort size');
+
+  for (const admin of [columnAdmin, envAdmin]) {
+    const standing = await getStanding(admin.id, cohort.id);
+    assert.equal(standing.ranked, false);
+    assert.equal(standing.rank, null);
+    assert.equal(standing.total, 1, 'an operator still sees how many are ranked');
+  }
+});
+
+test('leaderboard: snapshots and digests skip operators too', async () => {
+  const cohort = await seedCohort();
+  const [student, admin] = await enrolMembers(cohort, 2);
+  await query(`UPDATE members SET is_admin = true WHERE id = $1`, [admin.id]);
+
+  await submit(student, 3);
+  await recomputePoints(cohort.id);
+
+  const snapshot = await snapshotLeaderboard(cohort.id);
+  assert.deepEqual(snapshot.entries.map((e) => e.id), [student.id]);
+
+  const rows = await query(`SELECT member_id FROM leaderboard_snapshots`);
+  assert.deepEqual(rows.rows.map((r) => r.member_id), [student.id],
+    'no snapshot row is written for the operator');
+});
+
 test('leaderboard: only members with live subscriptions appear', async () => {
   const cohort = await seedCohort();
   const [a, b] = await enrolMembers(cohort, 2);

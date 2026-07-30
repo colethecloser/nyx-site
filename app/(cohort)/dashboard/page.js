@@ -88,7 +88,11 @@ export default async function DashboardPage() {
         <div className="c-stat">
           <div className="v">{standing.rank ? `#${standing.rank}` : '—'}</div>
           <div className="l">Rank</div>
-          <div className="sub">of {standing.total} active members</div>
+          <div className="sub">
+            {standing.ranked
+              ? `of ${standing.total} active members`
+              : 'Operators are not ranked'}
+          </div>
         </div>
         <div className="c-stat">
           <div className="v">{standing.points}</div>

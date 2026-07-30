@@ -117,6 +117,15 @@ Three independent mechanisms, all exercised by tests:
 Every run writes to `job_runs`, surfaced at the bottom of `/admin`, so "did
 Monday's email actually go out?" is answerable without reading logs.
 
+### Who appears on the leaderboard
+
+Operators are excluded — from the board, the snapshots, and the weekly "you're
+#N" digest. An admin with zero points sitting at the bottom of a student ranking
+is noise, and it also inflated the "of N members" denominator everyone else saw.
+Admin status is recognised from either the `is_admin` column or the
+`ADMIN_EMAILS` allowlist, so both are filtered. An operator's own dashboard says
+"Operators are not ranked" rather than showing an empty rank.
+
 ---
 
 ## Billing
@@ -165,19 +174,21 @@ pure confirmation page, because a user can close the tab before it ever loads.
 
 ```bash
 npm install
-cp .env.example .env.local     # fill in the values
-npm run db:demo                # schema + cohort + demo data to look at
-npm run dev                    # http://localhost:3000/cohort
+cp .env.example .env.local     # placeholder keys are fine for the demo
+npm run demo
 ```
 
-Then sign in without waiting for email:
+`npm run demo` loads the schema, the cohort, and the demo data, prints a member
+and an admin sign-in link, then starts the dev server on
+http://localhost:3000/cohort. Paste either link into the browser — they are real
+single-use magic links, just printed instead of emailed.
+
+For a specific person, or a fresh link after the 30-minute expiry:
 
 ```bash
 node scripts/demo-login.js                  # lists members, links the first
 node scripts/demo-login.js admin@fgcu.edu   # the admin view
 ```
-
-It prints a real single-use magic link — paste it in the browser.
 
 | Command | What it loads |
 |---|---|
