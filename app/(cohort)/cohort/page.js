@@ -30,6 +30,9 @@ export default async function CohortLanding() {
   const { cohort, seats } = await loadCohort();
   const price = formatMoney(COHORT_PRICE_CENTS);
   const open = Boolean(cohort?.applications_open);
+  // A cohort can still be taking applications after it has begun, so the label
+  // has to follow the date rather than assume the start is always ahead of us.
+  const underway = Boolean(cohort) && new Date(cohort.starts_on) <= new Date();
 
   return (
     <div className="wrap c-page">
@@ -65,7 +68,7 @@ export default async function CohortLanding() {
         </div>
         <div className="c-stat">
           <div className="v">{cohort ? formatDay(cohort.starts_on, { year: undefined }) : 'TBA'}</div>
-          <div className="l">Starts</div>
+          <div className="l">{underway ? 'Started' : 'Starts'}</div>
           <div className="sub">{cohort?.name ?? 'Next cohort'}</div>
         </div>
       </div>

@@ -3,9 +3,12 @@
  * Applies db/schema.sql, then optionally db/seed.sql.
  *
  *   npm run db:migrate        # schema only
- *   npm run db:seed           # schema + seed data
+ *   npm run db:seed           # schema + the real first cohort
+ *   npm run db:demo           # schema + seed + demo data to look at
  *
- * Both files are idempotent, so this is safe to run on every deploy.
+ * All three files are idempotent, so this is safe to run on every deploy.
+ * `--demo` is for local exploration only; demo.sql refuses to run against a
+ * database that contains real members.
  */
 const fs = require('node:fs');
 const path = require('node:path');
@@ -19,7 +22,12 @@ async function main() {
   }
 
   const withSeed = process.argv.includes('--seed');
-  const files = ['schema.sql', ...(withSeed ? ['seed.sql'] : [])];
+  const withDemo = process.argv.includes('--demo');
+  const files = [
+    'schema.sql',
+    ...(withSeed || withDemo ? ['seed.sql'] : []),
+    ...(withDemo ? ['demo.sql'] : []),
+  ];
 
   const needsSsl = !/localhost|127\.0\.0\.1/.test(connectionString) &&
     !/sslmode=disable/.test(connectionString);

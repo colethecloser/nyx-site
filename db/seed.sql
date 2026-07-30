@@ -1,9 +1,14 @@
 -- Seed the first cohort and its 8 weekly deliverables.
 -- Idempotent: re-running only fills gaps, it never duplicates or overwrites.
 
+-- `is_active` is claimed only when no other cohort holds it. Without this the
+-- insert trips the `cohorts_one_active` unique index — which `ON CONFLICT
+-- (slug)` does not cover — and the whole migration fails with a confusing
+-- duplicate-key error on any database that already has a live cohort.
 INSERT INTO cohorts (slug, name, starts_on, ends_on, capacity, applications_open, is_active)
-VALUES ('fgcu-fall-2026', 'FGCU Finance Cohort — Fall 2026',
-        DATE '2026-09-07', DATE '2026-11-01', 30, true, true)
+SELECT 'fgcu-fall-2026', 'FGCU Finance Cohort — Fall 2026',
+       DATE '2026-09-07', DATE '2026-11-01', 30, true,
+       NOT EXISTS (SELECT 1 FROM cohorts WHERE is_active)
 ON CONFLICT (slug) DO NOTHING;
 
 WITH c AS (SELECT id, starts_on FROM cohorts WHERE slug = 'fgcu-fall-2026')

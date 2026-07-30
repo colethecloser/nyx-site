@@ -53,6 +53,9 @@ before(async () => {
 });
 
 after(async () => {
+  // Leave the database empty. The suite creates an active cohort, and the
+  // schema allows only one, so a leftover row makes a later `db:seed` fail.
+  await resetDb(query);
   restoreFetch();
   await getPool().end();
 });

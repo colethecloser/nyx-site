@@ -92,8 +92,8 @@ export default async function AdminPage() {
         </div>
       </div>
 
-      <section style={{ marginTop: 34 }}>
-        <h2 style={{ fontSize: 20, marginBottom: 14 }}>Applications to review</h2>
+      <section className="c-section" style={{ marginTop: 34 }}>
+        <h2 className="c-section-title">Applications to review</h2>
         {pending.length === 0 ? (
           <div className="c-empty">Nothing waiting. The auto-vetter has handled everything.</div>
         ) : (
@@ -144,8 +144,8 @@ export default async function AdminPage() {
         )}
       </section>
 
-      <section style={{ marginTop: 40 }}>
-        <h2 style={{ fontSize: 20, marginBottom: 14 }}>Ungraded submissions</h2>
+      <section className="c-section">
+        <h2 className="c-section-title">Ungraded submissions</h2>
         {ungraded.length === 0 ? (
           <div className="c-empty">Everything submitted has been graded.</div>
         ) : (
@@ -192,8 +192,8 @@ export default async function AdminPage() {
         )}
       </section>
 
-      <section style={{ marginTop: 40 }}>
-        <h2 style={{ fontSize: 20, marginBottom: 14 }}>Automation</h2>
+      <section className="c-section">
+        <h2 className="c-section-title">Automation</h2>
         <p style={{ fontSize: 13.5, color: 'var(--muted)', marginBottom: 14 }}>
           Weekly job runs Mondays 09:00 ET; daily job runs 10:00 ET. Both are idempotent — a rerun
           sends nothing twice.

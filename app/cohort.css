@@ -46,15 +46,27 @@
 .c-page-head p { color: var(--muted); font-size: 16px; max-width: 62ch; }
 .c-eyebrow { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
 
+/* globals.css styles marketing headings with `max-width: 18ch` and a large
+   clamped font size. Both are wrong here — "Applications to review" would wrap
+   mid-phrase — so the cohort surfaces reset them once, centrally. */
+.cohort h1, .cohort h2, .cohort h3, .cohort h4 { max-width: none; }
+.cohort h2 { font-size: 20px; line-height: 1.25; }
+
+/* Section heading above a list (deliverables, review queue, …). */
+.c-section-title { font-size: 20px; margin-bottom: 14px; }
+.c-section + .c-section { margin-top: 40px; }
+
 .c-panel {
   border: 1px solid var(--line); border-radius: 16px;
   background: var(--panel); padding: 26px;
 }
 .c-panel + .c-panel { margin-top: 16px; }
-.c-panel h2 { font-size: 20px; margin-bottom: 10px; max-width: none; }
+.c-panel h2 { font-size: 20px; margin-bottom: 10px; }
 .c-panel h3 { font-size: 17px; margin-bottom: 8px; }
 .c-grid { display: grid; gap: 16px; }
-.c-grid.two { grid-template-columns: 1fr 1fr; }
+/* Side-by-side panels size to their own content instead of being stretched to
+   match the tallest one. */
+.c-grid.two { grid-template-columns: 1fr 1fr; align-items: start; }
 .c-grid.three { grid-template-columns: repeat(3, 1fr); }
 .c-grid.stats { grid-template-columns: repeat(4, 1fr); }
 
@@ -142,7 +154,8 @@
 
 /* --- leaderboard ---------------------------------------------------------- */
 .c-board { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-.c-board-row { display: grid; grid-template-columns: 62px 1fr 110px 96px 92px; align-items: center; }
+/* Last column is wide enough for the "Last week" header to sit on one line. */
+.c-board-row { display: grid; grid-template-columns: 62px 1fr 110px 96px 112px; align-items: center; }
 .c-board-row > div { padding: 15px 18px; font-size: 14px; border-bottom: 1px solid var(--line); }
 .c-board-row:last-child > div { border-bottom: none; }
 .c-board-head > div { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); background: rgba(255,255,255,.02); }

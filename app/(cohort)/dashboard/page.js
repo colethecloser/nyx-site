@@ -37,8 +37,15 @@ export default async function DashboardPage() {
     getStanding(member.id, member.cohort_id),
   ]);
 
-  const open = deliverables.filter((d) => !d.submission_id && new Date(d.due_at) > new Date());
-  const nextDue = open.sort((a, b) => new Date(a.due_at) - new Date(b.due_at))[0];
+  // "Open" and "outstanding" are different things: a week can still be open
+  // while this member has already submitted it. Conflating them told a member
+  // who was fully caught up that nothing was open, which is simply untrue.
+  const byDueDate = (a, b) => new Date(a.due_at) - new Date(b.due_at);
+  const stillOpen = deliverables.filter((d) => new Date(d.due_at) > new Date()).sort(byDueDate);
+  const outstanding = stillOpen.filter((d) => !d.submission_id);
+
+  const nextDue = outstanding[0];
+  const caughtUpOn = !nextDue ? stillOpen[0] : null;
 
   return (
     <div className="wrap c-page">
@@ -48,7 +55,9 @@ export default async function DashboardPage() {
         <p>
           {nextDue
             ? `Week ${nextDue.week_number} is open and due ${relativeDays(nextDue.due_at)}.`
-            : 'Nothing is open right now. The next deliverable publishes Monday morning.'}
+            : caughtUpOn
+              ? `You're caught up. Week ${caughtUpOn.week_number} is submitted and closes ${relativeDays(caughtUpOn.due_at)}.`
+              : 'Nothing is open right now. The next deliverable publishes Monday morning.'}
         </p>
       </div>
 
@@ -98,7 +107,7 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <h2 style={{ fontSize: 20, marginBottom: 14 }}>Deliverables</h2>
+      <h2 className="c-section-title">Deliverables</h2>
 
       {deliverables.length === 0 ? (
         <div className="c-empty">

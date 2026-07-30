@@ -166,12 +166,30 @@ pure confirmation page, because a user can close the tab before it ever loads.
 ```bash
 npm install
 cp .env.example .env.local     # fill in the values
-npm run db:seed                # schema + first cohort and its 8 deliverables
-npm run dev
+npm run db:demo                # schema + cohort + demo data to look at
+npm run dev                    # http://localhost:3000/cohort
 ```
 
-`npm run db:migrate` applies the schema alone. Both files are idempotent and safe
-to run on every deploy.
+Then sign in without waiting for email:
+
+```bash
+node scripts/demo-login.js                  # lists members, links the first
+node scripts/demo-login.js admin@fgcu.edu   # the admin view
+```
+
+It prints a real single-use magic link — paste it in the browser.
+
+| Command | What it loads |
+|---|---|
+| `npm run db:migrate` | Schema only |
+| `npm run db:seed` | Schema + the real first cohort and its 8 deliverables |
+| `npm run db:demo` | The above, plus 12 members, graded work, a populated leaderboard, a review queue, and a claimable invite at `/join/demo-invite-token` |
+
+All three are idempotent. `db:demo` is for local exploration only — it refuses
+to run against a database that contains real Stripe customers.
+
+Nothing in the demo path talks to Stripe or Resend, so it runs with placeholder
+keys.
 
 ### Stripe
 
@@ -197,6 +215,9 @@ schedules are set for US Eastern.
 ```bash
 DATABASE_URL=postgres://…/cohort_test npm test
 ```
+
+Point it at a **throwaway database** — the suite truncates every table between
+tests and again on exit.
 
 47 tests. `tests/scoring.test.mjs` is pure logic and needs nothing; the rest run
 against a real Postgres — every table is truncated between tests. Stripe and
