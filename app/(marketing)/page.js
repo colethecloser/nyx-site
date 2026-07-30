@@ -1,4 +1,4 @@
-import { homeHtml } from '../lib/homeHtml';
+import { homeHtml } from '../../lib/homeHtml';
 
 export const metadata = {
   title: 'NYX-1 — Buy back your nights',

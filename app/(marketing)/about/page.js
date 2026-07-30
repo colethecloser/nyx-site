@@ -1,4 +1,4 @@
-import { aboutHtml } from '../../lib/aboutHtml';
+import { aboutHtml } from '../../../lib/aboutHtml';
 
 export const metadata = {
   title: 'About the Founder — NYX',

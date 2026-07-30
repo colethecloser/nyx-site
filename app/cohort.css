@@ -1,0 +1,198 @@
+/* ===========================================================================
+   FGCU Finance Cohort — platform surfaces.
+   Shares the design tokens declared in globals.css; everything here is scoped
+   under .cohort so it can never leak into the NYX-1 marketing pages.
+   =========================================================================== */
+
+.cohort {
+  --ok: #7fd6a2;
+  --warn: #f6c878;
+  --bad: #e88b8b;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.cohort main { flex: 1; }
+
+/* --- chrome --------------------------------------------------------------- */
+.c-nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(12px);
+  background: linear-gradient(180deg, rgba(6,7,15,.9), rgba(6,7,15,.55));
+  border-bottom: 1px solid var(--line);
+}
+.c-nav-in { display: flex; align-items: center; justify-content: space-between; height: 62px; gap: 18px; }
+.c-brand { display: flex; align-items: center; gap: 11px; font-weight: 600; letter-spacing: .03em; font-size: 15px; }
+.c-brand .mark {
+  width: 24px; height: 24px; border-radius: 7px;
+  background: conic-gradient(from 210deg, var(--violet), var(--cyan), var(--amber), var(--violet));
+  box-shadow: 0 0 16px -2px var(--violet);
+}
+.c-nav-links { display: flex; align-items: center; gap: 22px; font-size: 13.5px; color: var(--muted); }
+.c-nav-links a:hover { color: var(--ink); }
+.c-nav-links a.active { color: var(--ink); }
+.c-foot {
+  border-top: 1px solid var(--line);
+  padding: 30px 0 44px; font-size: 12.5px; color: var(--faint);
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.c-foot a:hover { color: var(--muted); }
+
+/* --- page furniture ------------------------------------------------------- */
+.c-page { padding: 46px 0 70px; }
+.c-page-head { margin-bottom: 34px; }
+.c-page-head h1 { font-size: clamp(30px, 4.6vw, 46px); line-height: 1.04; margin-bottom: 12px; }
+.c-page-head p { color: var(--muted); font-size: 16px; max-width: 62ch; }
+.c-eyebrow { font-size: 12px; letter-spacing: .2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 16px; }
+
+.c-panel {
+  border: 1px solid var(--line); border-radius: 16px;
+  background: var(--panel); padding: 26px;
+}
+.c-panel + .c-panel { margin-top: 16px; }
+.c-panel h2 { font-size: 20px; margin-bottom: 10px; max-width: none; }
+.c-panel h3 { font-size: 17px; margin-bottom: 8px; }
+.c-grid { display: grid; gap: 16px; }
+.c-grid.two { grid-template-columns: 1fr 1fr; }
+.c-grid.three { grid-template-columns: repeat(3, 1fr); }
+.c-grid.stats { grid-template-columns: repeat(4, 1fr); }
+
+.c-stat { border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; background: var(--panel); }
+.c-stat .v { font-size: 30px; font-weight: 600; line-height: 1; letter-spacing: -.02em; }
+.c-stat .l { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin-top: 8px; }
+.c-stat .sub { font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+
+/* --- badges --------------------------------------------------------------- */
+.c-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line-bright); color: var(--muted);
+  white-space: nowrap;
+}
+.c-badge.ok { color: var(--ok); border-color: rgba(127,214,162,.4); background: rgba(127,214,162,.08); }
+.c-badge.warn { color: var(--warn); border-color: rgba(246,200,120,.4); background: rgba(246,200,120,.08); }
+.c-badge.bad { color: var(--bad); border-color: rgba(232,139,139,.4); background: rgba(232,139,139,.08); }
+.c-badge.info { color: var(--cyan); border-color: rgba(111,224,236,.4); background: rgba(111,224,236,.08); }
+
+/* --- forms ---------------------------------------------------------------- */
+.c-form { display: grid; gap: 22px; }
+.c-field { display: grid; gap: 7px; }
+.c-field > label { font-size: 13.5px; font-weight: 500; color: var(--ink); }
+.c-field .hint { font-size: 12.5px; color: var(--faint); line-height: 1.5; }
+.c-field .err { font-size: 12.5px; color: var(--bad); }
+.c-field .count { font-size: 11.5px; color: var(--faint); text-align: right; font-family: "IBM Plex Mono", monospace; }
+
+.c-input, .c-select, .c-textarea {
+  width: 100%; font-family: inherit; font-size: 14.5px; color: var(--ink);
+  background: rgba(6,8,20,.6); border: 1px solid var(--line-bright); border-radius: 10px;
+  padding: 12px 14px; transition: border-color .2s;
+}
+.c-textarea { min-height: 130px; resize: vertical; line-height: 1.55; }
+.c-input:focus, .c-select:focus, .c-textarea:focus { outline: none; border-color: var(--cyan); }
+.c-input[aria-invalid="true"], .c-textarea[aria-invalid="true"], .c-select[aria-invalid="true"] { border-color: var(--bad); }
+.c-input::placeholder, .c-textarea::placeholder { color: var(--faint); }
+.c-select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%); background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%; background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; padding-right: 40px; }
+.c-select option { background: #0b1130; color: var(--ink); }
+
+.c-check { display: flex; gap: 11px; align-items: flex-start; font-size: 13.5px; color: var(--muted); line-height: 1.55; cursor: pointer; }
+.c-check input { margin-top: 3px; width: 16px; height: 16px; accent-color: var(--cyan); flex: 0 0 auto; }
+
+.c-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.c-row.three { grid-template-columns: repeat(3, 1fr); }
+
+.c-fieldset { border: 1px solid var(--line); border-radius: 14px; padding: 24px; background: rgba(255,255,255,.015); }
+.c-fieldset legend { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--cyan); padding: 0 10px; }
+
+/* --- buttons -------------------------------------------------------------- */
+.c-btn {
+  font-family: inherit; cursor: pointer; font-size: 14.5px; font-weight: 600;
+  padding: 13px 26px; border-radius: 10px; border: 1px solid transparent;
+  transition: transform .12s, filter .2s, border-color .2s, color .2s;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+}
+.c-btn:active { transform: translateY(1px); }
+.c-btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.c-btn-primary { background: linear-gradient(135deg, var(--amber), #e0a64e); color: #241704; box-shadow: 0 16px 40px -18px var(--amber); }
+.c-btn-primary:hover { filter: brightness(1.06); }
+.c-btn-ghost { background: transparent; border-color: var(--line-bright); color: var(--ink); }
+.c-btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+.c-btn-small { font-size: 12.5px; padding: 8px 14px; border-radius: 8px; }
+.c-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; }
+
+/* --- alerts --------------------------------------------------------------- */
+.c-alert { border-radius: 12px; padding: 15px 18px; font-size: 14px; line-height: 1.55; border: 1px solid var(--line-bright); color: var(--muted); }
+.c-alert.bad { border-color: rgba(232,139,139,.45); background: rgba(232,139,139,.08); color: #f3c0c0; }
+.c-alert.ok { border-color: rgba(127,214,162,.45); background: rgba(127,214,162,.08); color: #bfe9d1; }
+.c-alert.info { border-color: rgba(111,224,236,.4); background: rgba(111,224,236,.06); color: #bfeaf0; }
+
+/* --- deliverables --------------------------------------------------------- */
+.c-deliverable { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); overflow: hidden; }
+.c-deliverable + .c-deliverable { margin-top: 14px; }
+.c-deliverable.done { border-color: rgba(127,214,162,.28); }
+.c-deliverable.overdue { border-color: rgba(232,139,139,.3); }
+.c-del-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 22px 24px; flex-wrap: wrap; }
+.c-del-week { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--amber); letter-spacing: .08em; }
+.c-del-head h3 { font-size: 19px; margin: 8px 0 0; }
+.c-del-meta { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.c-del-body { padding: 0 24px 22px; }
+.c-del-body p { font-size: 14.5px; color: var(--muted); line-height: 1.65; }
+.c-del-rubric { margin-top: 14px; font-size: 13px; color: var(--faint); line-height: 1.6; border-left: 2px solid var(--line-bright); padding-left: 14px; }
+.c-del-foot { border-top: 1px solid var(--line); padding: 18px 24px; background: rgba(255,255,255,.015); }
+
+/* --- leaderboard ---------------------------------------------------------- */
+.c-board { border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.c-board-row { display: grid; grid-template-columns: 62px 1fr 110px 96px 92px; align-items: center; }
+.c-board-row > div { padding: 15px 18px; font-size: 14px; border-bottom: 1px solid var(--line); }
+.c-board-row:last-child > div { border-bottom: none; }
+.c-board-head > div { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); background: rgba(255,255,255,.02); }
+.c-board-row.me > div { background: rgba(246,200,120,.07); }
+.c-board-rank { font-family: "IBM Plex Mono", monospace; font-size: 15px; color: var(--muted); }
+.c-board-row.top .c-board-rank { color: var(--amber); font-weight: 600; }
+.c-board-name { font-weight: 500; }
+.c-board-name .you { font-size: 11px; color: var(--amber); letter-spacing: .1em; text-transform: uppercase; margin-left: 8px; }
+.c-board-points { font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+.c-delta { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; }
+.c-delta.up { color: var(--ok); }
+.c-delta.flat { color: var(--faint); }
+
+/* --- admin ---------------------------------------------------------------- */
+.c-app-card { border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 20px 22px; }
+.c-app-card + .c-app-card { margin-top: 12px; }
+.c-app-top { display: flex; justify-content: space-between; gap: 16px; align-items: flex-start; flex-wrap: wrap; }
+.c-app-top h3 { font-size: 16.5px; margin: 0; }
+.c-app-sub { font-size: 12.5px; color: var(--faint); margin-top: 4px; }
+.c-app-score { font-family: "IBM Plex Mono", monospace; font-size: 22px; font-weight: 600; }
+.c-app-answers { margin-top: 16px; display: grid; gap: 12px; }
+.c-app-answers dt { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--faint); margin-bottom: 5px; }
+.c-app-answers dd { font-size: 13.5px; color: var(--muted); line-height: 1.6; white-space: pre-wrap; }
+.c-app-actions { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; }
+
+.c-empty { text-align: center; padding: 56px 24px; color: var(--faint); font-size: 14.5px; border: 1px dashed var(--line-bright); border-radius: 16px; }
+
+/* --- misc ----------------------------------------------------------------- */
+.c-meta-list { display: grid; gap: 10px; margin-top: 16px; }
+.c-meta-list div { display: flex; justify-content: space-between; gap: 16px; font-size: 13.5px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.c-meta-list div:last-child { border-bottom: none; padding-bottom: 0; }
+.c-meta-list dt, .c-meta-list .k { color: var(--faint); }
+.c-meta-list dd, .c-meta-list .v { color: var(--ink); text-align: right; }
+
+.c-steps { display: grid; gap: 14px; counter-reset: step; margin-top: 26px; }
+.c-step { display: flex; gap: 16px; align-items: flex-start; }
+.c-step .n { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--amber); border: 1px solid var(--line-bright); border-radius: 8px; width: 30px; height: 30px; display: grid; place-items: center; flex: 0 0 auto; }
+.c-step h4 { font-size: 15.5px; margin-bottom: 4px; }
+.c-step p { font-size: 13.5px; color: var(--muted); line-height: 1.6; }
+
+.c-prose p { font-size: 15px; color: var(--muted); line-height: 1.7; margin-bottom: 14px; }
+.c-prose p:last-child { margin-bottom: 0; }
+.c-prose strong { color: var(--ink); font-weight: 600; }
+
+@media (max-width: 840px) {
+  .c-grid.two, .c-grid.three, .c-row, .c-row.three { grid-template-columns: 1fr; }
+  .c-grid.stats { grid-template-columns: 1fr 1fr; }
+  .c-board-row { grid-template-columns: 46px 1fr 76px; }
+  .c-board-row > div:nth-child(4), .c-board-row > div:nth-child(5) { display: none; }
+  .c-board-row > div { padding: 13px 12px; font-size: 13px; }
+  .c-nav-links { gap: 14px; font-size: 12.5px; }
+  .c-page { padding: 32px 0 56px; }
+}
