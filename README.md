@@ -1,8 +1,26 @@
+# NYX
+
+Two products in one Next.js app:
+
+1. **NYX-1 marketing site** — the pages documented below.
+2. **[FGCU Finance Cohort platform](docs/cohort-platform.md)** — a selective,
+   application-gated cohort with Stripe subscriptions, weekly deliverables, a
+   peer leaderboard, and cron-driven automation.
+
+Each lives in its own App Router route group with its own chrome
+(`app/(marketing)` and `app/(cohort)`), so neither can affect the other's
+layout or styling.
+
+> **The app is no longer a static export.** The cohort platform needs a server
+> runtime for Stripe webhooks, Postgres, sessions, and cron, so `output:
+> 'export'` was removed from `next.config.mjs`. The marketing pages below are
+> still prerendered at build time and deploy to Vercel unchanged.
+
+---
+
 # NYX-1 — Marketing Site
 
 A production-ready marketing site for NYX-1, a restorative sleep engine.
-Built with Next.js (App Router) and exported as a static site, so it deploys
-to Vercel with zero configuration and no server costs.
 
 ## Pages
 - `/` — landing page (hero, anti-stimulant pitch, the device, how it works, time-value calculator, comparison table, reserve/pricing)
@@ -12,8 +30,19 @@ to Vercel with zero configuration and no server costs.
 ```bash
 npm install
 npm run dev        # http://localhost:3000
-npm run build      # static export to ./out
+npm run build      # production build
+npm test           # requires DATABASE_URL for the cohort suite
 ```
+
+Check what is configured and what is still missing at any point:
+
+```bash
+npm run doctor
+```
+
+To deploy, follow [DEPLOY.md](DEPLOY.md) — it is tiered, so you can stop at
+whichever level you need tonight. For how the platform works internally, see
+[docs/cohort-platform.md](docs/cohort-platform.md).
 
 ## Deploy to Vercel (GitHub flow)
 1. Create a new GitHub repo and push this folder:
@@ -27,7 +56,8 @@ npm run build      # static export to ./out
    ```
 2. Go to vercel.com → New Project → import the repo.
 3. Vercel auto-detects Next.js. Leave the defaults and deploy.
-   (Build command `next build`, output is the static `out/` directory.)
+4. For the cohort platform, add the environment variables from `.env.example`.
+   `vercel.json` already declares both cron schedules.
 
 ## Add the real product photo (AI generated)
 The site ships with a clean vector render so it looks complete immediately.

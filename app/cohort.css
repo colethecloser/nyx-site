@@ -1,0 +1,302 @@
+/* ===========================================================================
+   FGCU Student Investment Group — visual identity.
+
+   Taken from the Instagram posts: EB Garamond throughout, deep navy and royal
+   blue on near-white, sky-blue as the interactive accent, generous letterspacing
+   on uppercase display type. Everything is scoped under .cohort so the NYX-1
+   marketing pages (dark, sans, amber) are untouched.
+   =========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap');
+
+.cohort {
+  /* Brand */
+  --navy: #262b63;          /* the solid block behind "STUDENT INVESTMENT GROUP" */
+  --navy-deep: #1c2050;
+  --royal: #1536c4;         /* "WHERE ANALYSTS" */
+  --sky: #a9d8ea;           /* pills, photo frame */
+  --sky-soft: #d3ebf5;
+  --paper: #eef4fb;         /* post background */
+  --white: #ffffff;
+
+  /* Semantic — kept separate from the brand blues */
+  --good: #1f7a52;
+  --warn: #9a6b12;
+  --bad: #b3261e;
+  --good-bg: #e6f4ed;
+  --warn-bg: #fdf3dd;
+  --bad-bg: #fbeae9;
+
+  /* Neutrals, biased toward the brand navy rather than a flat grey */
+  --ink: #1b1f47;
+  --muted: #4a5080;
+  --faint: #7b81a8;
+  --line: #d7e0ee;
+  --line-strong: #b9c6dd;
+
+  --serif: 'EB Garamond', Garamond, 'Adobe Garamond Pro', Georgia, 'Times New Roman', serif;
+  --maxw: 1060px;
+
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  -webkit-font-smoothing: antialiased;
+}
+
+.cohort main { flex: 1; }
+.cohort ::selection { background: var(--sky); color: var(--navy-deep); }
+
+/* Reset the marketing stylesheet's heading rules. */
+.cohort h1, .cohort h2, .cohort h3, .cohort h4 {
+  max-width: none;
+  font-family: var(--serif);
+  color: var(--navy);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+}
+.cohort h2 { font-size: 27px; }
+.cohort h3 { font-size: 20px; }
+.cohort a { color: var(--royal); }
+
+.cohort :focus-visible { outline: 2px solid var(--royal); outline-offset: 3px; border-radius: 3px; }
+
+/* --- chrome --------------------------------------------------------------- */
+.c-nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--navy);
+  border-bottom: 3px solid var(--sky);
+}
+.c-nav-in { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 18px; flex-wrap: wrap; padding: 9px 0; }
+.cohort a.c-brand,
+.c-brand {
+  display: flex; align-items: baseline; gap: 10px;
+  font-size: 17px; font-weight: 600; color: var(--white);
+  letter-spacing: 0.13em; text-transform: uppercase;
+}
+.c-brand .mark {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--sky); flex: 0 0 auto; align-self: center;
+}
+.c-nav-links { display: flex; align-items: center; gap: 22px; font-size: 15.5px; }
+.c-nav-links a { color: #cbd8ee; letter-spacing: 0.02em; }
+.c-nav-links a:hover, .c-nav-links a.active { color: var(--white); }
+
+.c-foot {
+  border-top: 1px solid var(--line);
+  margin-top: 40px; padding: 26px 0 46px;
+  font-size: 14.5px; color: var(--muted);
+  display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+}
+.c-foot a { color: var(--muted); }
+.c-foot a:hover { color: var(--royal); }
+
+/* --- hero ----------------------------------------------------------------- */
+.c-hero { text-align: center; margin-bottom: 40px; }
+.c-hero h1 {
+  font-size: clamp(40px, 7.4vw, 74px);
+  text-transform: uppercase;
+  letter-spacing: -0.012em;
+  line-height: 1.02;
+  max-width: 14ch;          /* two lines, as in the posts */
+  margin: 0 auto 4px;
+}
+.c-hero .c-eyebrow { margin-bottom: 22px; }
+
+/* --- page furniture ------------------------------------------------------- */
+.c-page { padding: 48px 0 60px; }
+.c-page-head { margin-bottom: 34px; }
+.c-page-head h1 { font-size: clamp(34px, 6vw, 62px); margin-bottom: 14px; }
+.c-page-head p { color: var(--muted); font-size: 18px; max-width: 60ch; }
+
+/* The letterspaced small-caps rule used above every headline in the posts. */
+.c-eyebrow {
+  font-size: 13px; letter-spacing: 0.26em; text-transform: uppercase;
+  color: var(--navy); font-weight: 600; margin-bottom: 18px;
+}
+
+.c-panel {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 28px 30px;
+}
+.c-panel + .c-panel { margin-top: 16px; }
+.c-panel h2 { font-size: 24px; margin-bottom: 12px; }
+
+.c-section + .c-section { margin-top: 44px; }
+.c-section-title { font-size: 26px; margin-bottom: 16px; }
+
+.c-grid { display: grid; gap: 18px; }
+.c-grid.two { grid-template-columns: 1fr 1fr; align-items: start; }
+.c-grid.three { grid-template-columns: repeat(3, 1fr); }
+.c-grid.stats { grid-template-columns: repeat(4, 1fr); }
+
+.c-stat { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; }
+.c-stat .v { font-size: 38px; font-weight: 700; line-height: 1; color: var(--royal); font-variant-numeric: tabular-nums; }
+.c-stat .l { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin-top: 10px; font-weight: 600; }
+.c-stat .sub { font-size: 14.5px; color: var(--muted); margin-top: 5px; }
+
+/* --- the sky-blue pill, straight off the posts ---------------------------- */
+.c-badge {
+  display: inline-flex; align-items: center; gap: 7px; white-space: nowrap;
+  font-size: 13.5px; font-weight: 600; letter-spacing: 0.04em;
+  padding: 6px 15px; border-radius: 999px;
+  background: var(--sky-soft); color: var(--navy); border: 1px solid transparent;
+}
+.c-badge.ok { background: var(--good-bg); color: var(--good); }
+.c-badge.warn { background: var(--warn-bg); color: var(--warn); }
+.c-badge.bad { background: var(--bad-bg); color: var(--bad); }
+.c-badge.info { background: var(--sky-soft); color: var(--navy); }
+
+/* --- forms ---------------------------------------------------------------- */
+.c-form { display: grid; gap: 24px; }
+.c-field { display: grid; gap: 7px; }
+.c-field > label { font-size: 17px; font-weight: 600; color: var(--navy); }
+.c-field .hint { font-size: 15px; color: var(--muted); line-height: 1.55; }
+.c-field .err { font-size: 15px; color: var(--bad); font-weight: 500; }
+.c-field .count { font-size: 14px; color: var(--faint); text-align: right; font-variant-numeric: tabular-nums; }
+
+.c-input, .c-select, .c-textarea {
+  width: 100%; font-family: var(--serif); font-size: 17px; color: var(--ink);
+  background: var(--white); border: 1.5px solid var(--line-strong); border-radius: 9px;
+  padding: 12px 14px; transition: border-color .15s, box-shadow .15s;
+}
+.c-textarea { min-height: 150px; resize: vertical; line-height: 1.65; }
+.c-input:focus, .c-select:focus, .c-textarea:focus {
+  outline: none; border-color: var(--royal); box-shadow: 0 0 0 3px rgba(21, 54, 196, .13);
+}
+.c-input[aria-invalid="true"], .c-textarea[aria-invalid="true"], .c-select[aria-invalid="true"] { border-color: var(--bad); }
+.c-input::placeholder, .c-textarea::placeholder { color: var(--faint); }
+.c-select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--navy) 50%), linear-gradient(135deg, var(--navy) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 52%, calc(100% - 14px) 52%;
+  background-size: 6px 6px, 6px 6px; background-repeat: no-repeat; padding-right: 42px;
+}
+
+.c-check { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; color: var(--muted); line-height: 1.6; cursor: pointer; }
+.c-check input { margin-top: 5px; width: 17px; height: 17px; accent-color: var(--royal); flex: 0 0 auto; }
+
+.c-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.c-row.three { grid-template-columns: repeat(3, 1fr); }
+
+.c-fieldset { border: 1px solid var(--line); border-radius: 14px; padding: 26px 28px; background: var(--white); }
+.c-fieldset legend {
+  font-size: 12.5px; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--navy); font-weight: 600; padding: 0 12px;
+}
+
+/* --- buttons -------------------------------------------------------------- */
+.c-btn {
+  font-family: var(--serif); cursor: pointer;
+  font-size: 17px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 13px 30px; border-radius: 999px; border: 1.5px solid transparent;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.c-btn-primary { background: var(--navy); color: var(--white); }
+.c-btn-primary:hover { background: var(--royal); }
+.c-btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--navy); }
+.c-btn-ghost:hover { border-color: var(--royal); color: var(--royal); }
+.c-btn-small { font-size: 15px; padding: 8px 18px; }
+.c-btn:disabled { opacity: .45; cursor: not-allowed; }
+
+/* The big light-blue "APPLY NOW — LINK IN BIO" pill. */
+.c-btn-apply {
+  background: var(--sky); color: var(--royal);
+  font-size: 21px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 17px 46px;
+}
+.c-btn-apply:hover { background: var(--sky-soft); color: var(--navy); }
+
+/* --- alerts --------------------------------------------------------------- */
+.c-alert { border-radius: 12px; padding: 16px 20px; font-size: 16px; line-height: 1.6; border: 1px solid var(--line-strong); background: var(--white); color: var(--muted); }
+.c-alert.bad { border-color: #f0c4c1; background: var(--bad-bg); color: #8e1e18; }
+.c-alert.ok { border-color: #bfe0d0; background: var(--good-bg); color: #145c3d; }
+.c-alert.info { border-color: var(--sky); background: var(--sky-soft); color: var(--navy-deep); }
+.c-alert strong { color: inherit; }
+
+/* --- deliverables --------------------------------------------------------- */
+.c-deliverable { background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.c-deliverable + .c-deliverable { margin-top: 16px; }
+.c-deliverable.done { border-color: #bfe0d0; }
+.c-deliverable.overdue { border-color: #f0c4c1; }
+.c-del-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; padding: 22px 26px; flex-wrap: wrap; }
+.c-del-week { font-size: 12.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--royal); font-weight: 600; }
+.c-del-head h3 { font-size: 23px; margin: 7px 0 0; }
+.c-del-meta { display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+.c-del-body { padding: 0 26px 22px; }
+.c-del-body p { font-size: 16.5px; color: var(--muted); line-height: 1.65; }
+.c-del-rubric { margin-top: 14px; font-size: 15px; color: var(--faint); line-height: 1.6; border-left: 3px solid var(--sky); padding-left: 15px; }
+.c-del-foot { border-top: 1px solid var(--line); padding: 20px 26px; background: #fafcfe; }
+
+/* --- leaderboard ---------------------------------------------------------- */
+.c-board { background: var(--white); border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+.c-board-row { display: grid; grid-template-columns: 66px 1fr 100px 88px 104px; align-items: center; }
+.c-board-row > div { padding: 15px 20px; font-size: 16.5px; border-bottom: 1px solid var(--line); }
+.c-board-row:last-child > div { border-bottom: none; }
+.c-board-head > div { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--navy); font-weight: 600; background: var(--paper); }
+.c-board-row.me > div { background: var(--sky-soft); }
+.c-board-rank { font-size: 17px; color: var(--faint); font-variant-numeric: tabular-nums; }
+.c-board-row.top .c-board-rank { color: var(--royal); font-weight: 700; }
+.c-board-name { font-weight: 500; color: var(--navy); }
+.c-board-name .you { font-size: 12px; color: var(--royal); letter-spacing: 0.14em; text-transform: uppercase; margin-left: 9px; font-weight: 600; }
+.c-board-points { font-weight: 700; color: var(--navy); font-variant-numeric: tabular-nums; }
+.c-delta { font-size: 15px; font-variant-numeric: tabular-nums; }
+.c-delta.up { color: var(--good); }
+.c-delta.flat { color: var(--faint); }
+
+/* --- admin ---------------------------------------------------------------- */
+.c-app-card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; }
+.c-app-card + .c-app-card { margin-top: 14px; }
+.c-app-top { display: flex; justify-content: space-between; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+.c-app-top h3 { font-size: 21px; margin: 0; }
+.c-app-sub { font-size: 15px; color: var(--faint); margin-top: 4px; }
+.c-app-score { font-size: 30px; font-weight: 700; color: var(--royal); font-variant-numeric: tabular-nums; }
+.c-app-answers { margin-top: 18px; display: grid; gap: 14px; }
+.c-app-answers dt { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--navy); font-weight: 600; margin-bottom: 5px; }
+.c-app-answers dd { font-size: 16.5px; color: var(--muted); line-height: 1.65; white-space: pre-wrap; }
+.c-app-actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+.c-empty { text-align: center; padding: 54px 24px; color: var(--faint); font-size: 17px; background: var(--white); border: 1px dashed var(--line-strong); border-radius: 14px; }
+
+/* --- misc ----------------------------------------------------------------- */
+.c-meta-list { display: grid; gap: 12px; margin-top: 18px; }
+.c-meta-list div { display: flex; justify-content: space-between; gap: 16px; font-size: 16.5px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.c-meta-list div:last-child { border-bottom: none; padding-bottom: 0; }
+.c-meta-list .k { color: var(--muted); }
+.c-meta-list .v { color: var(--navy); font-weight: 600; text-align: right; font-variant-numeric: tabular-nums; }
+
+.c-steps { display: grid; gap: 16px; margin-top: 24px; list-style: none; }
+.c-step { display: flex; gap: 17px; align-items: flex-start; }
+.c-step .n {
+  font-size: 14px; font-weight: 700; color: var(--white); background: var(--navy);
+  border-radius: 50%; width: 32px; height: 32px; display: grid; place-items: center;
+  flex: 0 0 auto; font-variant-numeric: tabular-nums;
+}
+.c-step h4 { font-size: 18px; margin-bottom: 3px; }
+.c-step p { font-size: 16px; color: var(--muted); line-height: 1.6; }
+
+.c-prose p { font-size: 17.5px; color: var(--muted); line-height: 1.7; margin-bottom: 16px; }
+.c-prose p:last-child { margin-bottom: 0; }
+.c-prose strong { color: var(--navy); font-weight: 700; }
+
+@media (max-width: 860px) {
+  .c-grid.two, .c-grid.three, .c-row, .c-row.three { grid-template-columns: 1fr; }
+  .c-grid.stats { grid-template-columns: 1fr 1fr; }
+  .c-board-row { grid-template-columns: 50px 1fr 82px; }
+  .c-board-row > div:nth-child(4), .c-board-row > div:nth-child(5) { display: none; }
+  .c-board-row > div { padding: 13px 13px; font-size: 15.5px; }
+  .c-nav-links { gap: 15px; font-size: 14.5px; }
+  .c-page { padding: 34px 0 50px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cohort * { transition: none !important; animation: none !important; }
+}
