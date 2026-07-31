@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getCurrentMember } from '../../../../lib/session.js';
-import { COHORT_PRICE_CENTS } from '../../../../lib/env.js';
+import { COHORT_PRICE_CENTS, billingPeriod } from '../../../../lib/env.js';
 import { formatDate, formatMoney } from '../../../../lib/format.js';
 
 export const runtime = 'nodejs';
@@ -31,7 +31,7 @@ export default async function BillingPage() {
     <div className="wrap c-page" style={{ maxWidth: 560 }}>
       <div className="c-page-head">
         <h1>Billing</h1>
-        <p>Card details, invoices, and cancellation all live in Stripe&apos;s portal.</p>
+        <p>Dues, card details, invoices and cancellation all live in Stripe&apos;s portal.</p>
       </div>
 
       <div className="c-panel">
@@ -40,7 +40,7 @@ export default async function BillingPage() {
             <span className="k">Status</span>
             <span className="v"><span className={`c-badge ${tone}`}>{label}</span></span>
           </div>
-          <div><span className="k">Membership</span><span className="v">{formatMoney(COHORT_PRICE_CENTS)} / year</span></div>
+          <div><span className="k">Dues</span><span className="v">{formatMoney(COHORT_PRICE_CENTS)} {billingPeriod().label}</span></div>
           <div>
             <span className="k">{member.cancel_at_period_end ? 'Ends' : 'Renews'}</span>
             <span className="v">{formatDate(member.current_period_end)}</span>

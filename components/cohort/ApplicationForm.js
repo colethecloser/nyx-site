@@ -349,8 +349,8 @@ export default function ApplicationForm() {
         />
         <span>
           I understand this is eight weeks of graded work, that missing deliverables resets my
-          streak and shows on the cohort leaderboard, and that membership is billed annually if I
-          am accepted.
+          streak and shows on the analyst leaderboard, and that club dues are charged each
+          semester if I am offered a spot and accept it.
         </span>
       </label>
       {fields.agree_terms && <div className="err" style={{ marginTop: -14 }}>{fields.agree_terms}</div>}

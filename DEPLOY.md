@@ -102,8 +102,9 @@ Identical result; `/setup` exists so a shell is never required.
    STRIPE_WEBHOOK_SECRET=whsec_…
    ```
 
-No product or price setup needed — the $199 annual price is created inline. Set
-`STRIPE_PRICE_ID` only if you want to manage it in the dashboard.
+No product or price setup needed — the dues price is created inline from
+`COHORT_PRICE_CENTS` and `COHORT_BILLING_PERIOD`. Set `STRIPE_PRICE_ID` only if
+you want to manage it in the Stripe dashboard instead.
 
 Test locally first:
 

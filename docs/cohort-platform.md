@@ -2,7 +2,7 @@
 
 A selective, application-gated cohort platform living alongside the NYX-1
 marketing site in the same Next.js app. Students apply, get vetted, pay an
-annual subscription, and work through weekly deliverables ranked on a peer
+club dues, and work through weekly deliverables ranked on a peer
 leaderboard.
 
 The design goal was that **nobody has to log in for the thing to run**. Every
@@ -130,9 +130,16 @@ Admin status is recognised from either the `is_admin` column or the
 
 ## Billing
 
-Annual subscription, `COHORT_PRICE_CENTS` (default $199). If `STRIPE_PRICE_ID`
-is unset the price is described inline, so the platform runs against a bare
-Stripe account with no dashboard setup.
+Club dues, `COHORT_PRICE_CENTS` (default $1,799) charged every
+`COHORT_BILLING_PERIOD` (default `semester`). Stripe has no semester interval,
+so a semester is billed as every six months — the closest recurring shape it
+supports, which keeps renewal, dunning and cancellation working unchanged.
+Set `COHORT_PRICE_CENTS=0` for a group with no dues: the public page drops every
+money claim and accepted applicants are enrolled directly, since Stripe rejects
+a zero-amount subscription.
+
+If `STRIPE_PRICE_ID` is unset the price is described inline, so the platform
+runs against a bare Stripe account with no dashboard setup.
 
 | Event | Effect |
 |---|---|

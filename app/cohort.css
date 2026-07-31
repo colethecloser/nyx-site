@@ -201,20 +201,23 @@
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   transition: background .15s, color .15s, border-color .15s;
 }
-.c-btn-primary { background: var(--navy); color: var(--white); }
-.c-btn-primary:hover { background: var(--royal); }
-.c-btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--navy); }
-.c-btn-ghost:hover { border-color: var(--royal); color: var(--royal); }
+/* `.cohort a { color: royal }` otherwise wins over these, leaving royal text on
+   a navy button — the same collision that made the nav brand unreadable. Anchor
+   buttons are named explicitly so the button's own colour holds. */
+.c-btn-primary, .cohort a.c-btn-primary { background: var(--navy); color: var(--white); }
+.c-btn-primary:hover, .cohort a.c-btn-primary:hover { background: var(--royal); color: var(--white); }
+.c-btn-ghost, .cohort a.c-btn-ghost { background: transparent; border-color: var(--line-strong); color: var(--navy); }
+.c-btn-ghost:hover, .cohort a.c-btn-ghost:hover { border-color: var(--royal); color: var(--royal); }
 .c-btn-small { font-size: 15px; padding: 8px 18px; }
 .c-btn:disabled { opacity: .45; cursor: not-allowed; }
 
 /* The big light-blue "APPLY NOW — LINK IN BIO" pill. */
-.c-btn-apply {
+.c-btn-apply, .cohort a.c-btn-apply {
   background: var(--sky); color: var(--royal);
   font-size: 21px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
   padding: 17px 46px;
 }
-.c-btn-apply:hover { background: var(--sky-soft); color: var(--navy); }
+.c-btn-apply:hover, .cohort a.c-btn-apply:hover { background: var(--sky-soft); color: var(--navy); }
 
 /* --- alerts --------------------------------------------------------------- */
 .c-alert { border-radius: 12px; padding: 16px 20px; font-size: 16px; line-height: 1.6; border: 1px solid var(--line-strong); background: var(--white); color: var(--muted); }
