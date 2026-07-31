@@ -1,5 +1,5 @@
 import { getActiveCohort, seatCounts } from '../../../lib/applications.js';
-import { COHORT_PRICE_CENTS, PROGRAM, isFree } from '../../../lib/env.js';
+import { COHORT_PRICE_CENTS, PROGRAM, billingPeriod, isFree } from '../../../lib/env.js';
 import { formatDay, formatMoney } from '../../../lib/format.js';
 
 export const runtime = 'nodejs';
@@ -54,6 +54,7 @@ export default async function CohortLanding() {
   const { status, cohort, seats } = await loadCohort();
   const free = isFree();
   const price = formatMoney(COHORT_PRICE_CENTS);
+  const period = billingPeriod();
 
   // Applications are only advertised as closed when a cohort actually says so.
   const open = status === 'live' ? Boolean(cohort.applications_open) : true;
@@ -117,7 +118,7 @@ export default async function CohortLanding() {
         </div>
         <div className="c-stat">
           <div className="v">{free ? 'Free' : price}</div>
-          <div className="l">{free ? 'To join' : 'Per year'}</div>
+          <div className="l">{free ? 'To join' : `Dues ${period.label}`}</div>
           <div className="sub">{free ? 'No dues' : 'Only if you are offered a spot'}</div>
         </div>
       </div>
@@ -160,19 +161,25 @@ export default async function CohortLanding() {
       <div className="c-panel" style={{ marginTop: 18 }}>
         <div className="c-grid two">
           <div className="c-prose">
-            <h2>{free ? 'Joining' : 'Membership'}</h2>
+            <h2>{free ? 'Joining' : 'Club dues'}</h2>
             {free ? (
               <p>
-                <strong>Free to join.</strong> Apply, and if you are offered a spot you are in.
-                Everything below is included: weekly review of your work, the analyst leaderboard,
-                and every session in the trading room.
+                <strong>Free to join. No dues.</strong> Apply, and if you are offered a spot you
+                are in. Weekly review of your work, the analyst leaderboard, and every session in
+                the trading room are all included.
               </p>
             ) : (
-              <p>
-                <strong>{price} per year.</strong> Covers weekly review of your work, the analyst
-                leaderboard, and every session in the trading room. You are only asked to pay after
-                you are offered a spot — applying costs nothing.
-              </p>
+              <>
+                <p>
+                  <strong>Club dues are {price} {period.label}.</strong> They cover weekly review of
+                  your work, the analyst leaderboard, and every session in the trading room.
+                </p>
+                <p>
+                  <strong>Applying is free.</strong> Dues are only ever charged after you have been
+                  offered a spot and accepted it — nothing is taken while your application is being
+                  read, and being waitlisted costs nothing.
+                </p>
+              </>
             )}
             <p style={{ fontSize: 16 }}>
               Questions? Message us on Instagram{' '}
@@ -185,6 +192,7 @@ export default async function CohortLanding() {
           <div>
             <div className="c-meta-list" style={{ marginTop: 0 }}>
               <div><span className="k">Application</span><span className="v">Free · 15 min</span></div>
+              <div><span className="k">Dues</span><span className="v">{free ? 'None' : `${price} ${period.label}`}</span></div>
               <div><span className="k">You hear back</span><span className="v">Within 3 days</span></div>
               <div><span className="k">Experience needed</span><span className="v">None</span></div>
               <div><span className="k">Open to</span><span className="v">All majors, all years</span></div>
