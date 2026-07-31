@@ -5,6 +5,12 @@ const nextConfig = {
   // still prerendered at build time.
   images: { unoptimized: true },
   poweredByHeader: false,
+  // /api/setup reads these at runtime. Next's tracing cannot see a readFileSync
+  // built from process.cwd(), so without this they are absent from the Vercel
+  // bundle and setup fails in production while working perfectly locally.
+  outputFileTracingIncludes: {
+    '/api/setup': ['./db/*.sql'],
+  },
   async headers() {
     return [
       {
