@@ -62,11 +62,24 @@ COHORT_PRICE_CENTS=19900
 
    Idempotent — safe to re-run on every deploy.
 
-4. Redeploy so the new variables are picked up.
+4. Create your operator account. Member rows are normally created by the Stripe
+   webhook when someone pays — so on a fresh install there are none, and there
+   would be no way into `/admin` at all:
+
+   ```bash
+   DATABASE_URL='postgres://…' NEXT_PUBLIC_SITE_URL='https://your-domain' \
+     npm run create-admin -- you@fgcu.edu "Your Name"
+   ```
+
+   It prints a single-use sign-in link. Use it once; after that `/login` emails
+   you a link like any other member. The operator account holds no Stripe
+   subscription and does **not** consume a student seat.
+
+5. Redeploy so the new variables are picked up.
 
 Applications now work end to end: the form saves, the rubric scores, decisions
-are recorded, and `/admin` shows the review queue to anyone in `ADMIN_EMAILS`.
-Decision *emails* need tier 4.
+are recorded, and `/admin` shows the review queue. Decision *emails* need
+tier 4 — until then decisions are stored correctly but nobody is notified.
 
 > Seed dates are `2026-09-07` → `2026-11-01`. Change them in `db/seed.sql`
 > before seeding, or update the `cohorts` row afterwards.

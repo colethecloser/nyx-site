@@ -225,6 +225,33 @@ test('funnel: capacity is respected — a strong applicant with no seat is waitl
   assert.equal(autoDecisionFor(second.score, seats.seatsLeft), 'waitlisted');
 });
 
+test('funnel: an operator account does not consume a student seat', async () => {
+  const cohort = await seedCohort({ capacity: 30 });
+
+  const before = await seatCounts(cohort.id);
+  assert.equal(before.seatsLeft, 30, 'an empty cohort has every seat free');
+
+  await queryOne(
+    `INSERT INTO members (cohort_id, email, full_name, sub_status, is_admin)
+     VALUES ($1, 'operator@fgcu.edu', 'Operator', 'active', true) RETURNING id`,
+    [cohort.id]
+  );
+
+  const withOperator = await seatCounts(cohort.id);
+  assert.equal(withOperator.filled, 0, 'the operator is not a filled seat');
+  assert.equal(withOperator.seatsLeft, 30, 'capacity still means 30 students');
+
+  // A paying student does consume one.
+  await queryOne(
+    `INSERT INTO members (cohort_id, email, full_name, sub_status)
+     VALUES ($1, 'student@eagle.fgcu.edu', 'Student', 'active') RETURNING id`,
+    [cohort.id]
+  );
+  const withStudent = await seatCounts(cohort.id);
+  assert.equal(withStudent.filled, 1);
+  assert.equal(withStudent.seatsLeft, 29);
+});
+
 test('funnel: decisions are terminal for enrolled applicants', async () => {
   const cohort = await seedCohort();
   const application = await insertApplication(cohort);
