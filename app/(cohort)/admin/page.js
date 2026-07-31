@@ -11,7 +11,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Admin — FGCU Finance Cohort',
+  title: 'Admin — FGCU Student Investment Group',
   robots: { index: false, follow: false },
 };
 

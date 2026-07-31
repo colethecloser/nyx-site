@@ -3,6 +3,8 @@ import { badRequest, handleError, json, readJson } from '../../../lib/api.js';
 import { clientIp, hashToken } from '../../../lib/auth.js';
 import { rateLimit } from '../../../lib/ratelimit.js';
 import { createCheckoutSession } from '../../../lib/stripe.js';
+import { enrolFree } from '../../../lib/billing.js';
+import { isFree, siteUrl } from '../../../lib/env.js';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -46,6 +48,16 @@ export async function POST(request) {
 
     const cohort = await queryOne(`SELECT * FROM cohorts WHERE id = $1`, [application.cohort_id]);
     if (!cohort) return json({ error: 'Cohort not found.' }, { status: 404 });
+
+    // A free group never touches Stripe — see enrolFree for why this is a real
+    // branch rather than a checkout with a zero price.
+    if (isFree()) {
+      const member = await enrolFree(application);
+      if (!member) {
+        return json({ error: 'This invite is no longer valid.' }, { status: 404 });
+      }
+      return json({ url: `${siteUrl()}/join/success` });
+    }
 
     const session = await createCheckoutSession({ application, cohort, inviteToken: token });
     return json({ url: session.url });

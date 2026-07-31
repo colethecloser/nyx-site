@@ -8,7 +8,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Claim your seat — FGCU Finance Cohort',
+  title: 'Claim your seat — FGCU Student Investment Group',
   robots: { index: false, follow: false },
 };
 

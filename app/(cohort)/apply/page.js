@@ -7,8 +7,8 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Apply — FGCU Finance Cohort',
-  description: 'Application for the FGCU Finance Cohort. Free to apply; you are only charged if you accept a seat.',
+  title: 'Apply — FGCU Student Investment Group',
+  description: 'Application for the FGCU Student Investment Group. Free to apply; you are only charged if you accept a seat.',
 };
 
 export default async function ApplyPage() {

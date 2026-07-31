@@ -9,7 +9,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: 'Leaderboard — FGCU Finance Cohort',
+  title: 'Leaderboard — FGCU Student Investment Group',
   robots: { index: false, follow: false },
 };
 

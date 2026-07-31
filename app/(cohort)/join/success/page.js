@@ -2,7 +2,7 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 export const metadata = {
-  title: "You're in — FGCU Finance Cohort",
+  title: "You're in — FGCU Student Investment Group",
   robots: { index: false, follow: false },
 };
 

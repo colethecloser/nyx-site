@@ -2,7 +2,7 @@ import '../cohort.css';
 import { getCurrentMember } from '../../lib/session.js';
 
 export const metadata = {
-  title: 'FGCU Finance Cohort',
+  title: 'FGCU Student Investment Group',
   description:
     'A selective, application-gated finance cohort for FGCU students. Weekly deliverables, peer leaderboard, real feedback.',
 };
@@ -16,7 +16,7 @@ export default async function CohortLayout({ children }) {
       <nav className="c-nav">
         <div className="wrap c-nav-in">
           <a className="c-brand" href="/cohort">
-            <span className="mark" /> FGCU Finance Cohort
+            <span className="mark" /> FGCU Student Investment Group
           </a>
           <div className="c-nav-links">
             {member ? (
@@ -47,9 +47,11 @@ export default async function CohortLayout({ children }) {
 
       <div className="wrap">
         <footer className="c-foot">
-          <span>FGCU Finance Cohort — an independent student program at Florida Gulf Coast University.</span>
+          <span>FGCU Student Investment Group · Florida Gulf Coast University</span>
           <span>
-            <a href="/cohort">Program</a> · <a href="/apply">Apply</a> · <a href="/login">Sign in</a>
+            <a href="https://instagram.com/fgcusig" target="_blank" rel="noopener noreferrer">Instagram @fgcusig</a>
+            {' · '}
+            <a href="/apply">Apply</a> · <a href="/login">Sign in</a>
           </span>
         </footer>
       </div>

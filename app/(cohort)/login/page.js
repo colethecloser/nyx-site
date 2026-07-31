@@ -3,7 +3,7 @@ import LoginForm from '../../../components/cohort/LoginForm';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'Sign in — FGCU Finance Cohort' };
+export const metadata = { title: 'Sign in — FGCU Student Investment Group' };
 
 const ERRORS = {
   expired: 'That sign-in link has expired or was already used. Request a new one below.',

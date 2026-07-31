@@ -6,7 +6,7 @@ import { formatDate, formatMoney } from '../../../../lib/format.js';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'Billing — FGCU Finance Cohort' };
+export const metadata = { title: 'Billing — FGCU Student Investment Group' };
 
 const STATUS_COPY = {
   active: ['ok', 'Active'],

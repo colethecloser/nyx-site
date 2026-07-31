@@ -9,7 +9,7 @@ import { formatDate, formatDateTime, relativeDays } from '../../../lib/format.js
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'Dashboard — FGCU Finance Cohort' };
+export const metadata = { title: 'Dashboard — FGCU Student Investment Group' };
 
 export default async function DashboardPage() {
   const member = await getCurrentMember();
