@@ -34,8 +34,15 @@ npm run build      # production build
 npm test           # requires DATABASE_URL for the cohort suite
 ```
 
-For the cohort platform's environment variables and database setup, see
-[docs/cohort-platform.md](docs/cohort-platform.md) and `.env.example`.
+Check what is configured and what is still missing at any point:
+
+```bash
+npm run doctor
+```
+
+To deploy, follow [DEPLOY.md](DEPLOY.md) — it is tiered, so you can stop at
+whichever level you need tonight. For how the platform works internally, see
+[docs/cohort-platform.md](docs/cohort-platform.md).
 
 ## Deploy to Vercel (GitHub flow)
 1. Create a new GitHub repo and push this folder:

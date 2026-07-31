@@ -1,5 +1,5 @@
 import { getActiveCohort, seatCounts } from '../../../lib/applications.js';
-import { COHORT_PRICE_CENTS } from '../../../lib/env.js';
+import { COHORT_PRICE_CENTS, PROGRAM } from '../../../lib/env.js';
 import { formatDay, formatMoney } from '../../../lib/format.js';
 
 export const runtime = 'nodejs';
@@ -12,27 +12,39 @@ export const metadata = {
 };
 
 /**
- * Seat counts are live, but the page must render even with no database
- * configured — the marketing case for the program does not depend on it.
+ * Three distinct states, and the difference matters.
+ *
+ * `live`  — a cohort row was read; every number on the page is real.
+ * `unknown` — no cohort row, or the database is unreachable. The program is
+ *   still described from configuration, and crucially we do **not** claim
+ *   applications are closed. Saying "closed" because a connection failed is a
+ *   false statement to every visitor, and it was the default before this.
  */
 async function loadCohort() {
   try {
     const cohort = await getActiveCohort();
-    if (!cohort) return { cohort: null, seats: null };
-    return { cohort, seats: await seatCounts(cohort.id) };
+    if (!cohort) return { status: 'unknown', cohort: null, seats: null };
+    return { status: 'live', cohort, seats: await seatCounts(cohort.id) };
   } catch (err) {
     console.error('[cohort] could not load cohort:', err.message);
-    return { cohort: null, seats: null };
+    return { status: 'unknown', cohort: null, seats: null };
   }
 }
 
 export default async function CohortLanding() {
-  const { cohort, seats } = await loadCohort();
+  const { status, cohort, seats } = await loadCohort();
   const price = formatMoney(COHORT_PRICE_CENTS);
-  const open = Boolean(cohort?.applications_open);
+
+  // Applications are only advertised as closed when a cohort actually says so.
+  const open = status === 'live' ? Boolean(cohort.applications_open) : true;
+
+  const startsOn = cohort?.starts_on ?? PROGRAM.startsOn;
+  const capacity = cohort?.capacity ?? PROGRAM.capacity;
+  const cohortName = cohort?.name ?? PROGRAM.name;
+
   // A cohort can still be taking applications after it has begun, so the label
   // has to follow the date rather than assume the start is always ahead of us.
-  const underway = Boolean(cohort) && new Date(cohort.starts_on) <= new Date();
+  const underway = Boolean(startsOn) && new Date(startsOn) <= new Date();
 
   return (
     <div className="wrap c-page">
@@ -46,18 +58,18 @@ export default async function CohortLanding() {
         <p>
           A selective finance cohort for FGCU students. One deliverable a week, read and graded by
           someone who will tell you when it is bad. A leaderboard your peers can see. Thirty seats,
-          because past thirty the feedback stops being real.
+          because past that the feedback stops being real.
         </p>
       </div>
 
       <div className="c-grid stats" style={{ marginBottom: 34 }}>
         <div className="c-stat">
-          <div className="v">{cohort?.capacity ?? 30}</div>
+          <div className="v">{capacity}</div>
           <div className="l">Seats</div>
           <div className="sub">{seats ? `${seats.seatsLeft} still open` : 'Per cohort'}</div>
         </div>
         <div className="c-stat">
-          <div className="v">8</div>
+          <div className="v">{PROGRAM.weeks}</div>
           <div className="l">Weeks</div>
           <div className="sub">One deliverable each</div>
         </div>
@@ -67,9 +79,9 @@ export default async function CohortLanding() {
           <div className="sub">Billed annually</div>
         </div>
         <div className="c-stat">
-          <div className="v">{cohort ? formatDay(cohort.starts_on, { year: undefined }) : 'TBA'}</div>
+          <div className="v">{startsOn ? formatDay(startsOn, { year: undefined }) : 'TBA'}</div>
           <div className="l">{underway ? 'Started' : 'Starts'}</div>
-          <div className="sub">{cohort?.name ?? 'Next cohort'}</div>
+          <div className="sub">{cohortName}</div>
         </div>
       </div>
 
@@ -135,7 +147,7 @@ export default async function CohortLanding() {
               <div><span className="k">Application</span><span className="v">Free</span></div>
               <div><span className="k">Decision</span><span className="v">Within 3 days</span></div>
               <div><span className="k">Membership</span><span className="v">{price}/year</span></div>
-              <div><span className="k">Seats left</span><span className="v">{seats ? seats.seatsLeft : '—'}</span></div>
+              <div><span className="k">Seats left</span><span className="v">{seats ? seats.seatsLeft : `${capacity} per cohort`}</span></div>
             </div>
             <div style={{ marginTop: 22, display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {open ? (
