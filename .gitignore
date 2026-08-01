@@ -5,3 +5,10 @@ out
 *.log
 .env*
 .vercel
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+dist
+.vite
