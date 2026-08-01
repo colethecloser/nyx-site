@@ -7,6 +7,11 @@ Two products in one Next.js app:
    application-gated cohort with Stripe subscriptions, weekly deliverables, a
    peer leaderboard, and cron-driven automation.
 
+This repo also hosts three standalone **[PE portfolio projects](projects/)**
+(LBO model builder, deal screener, comparable transactions database) —
+independent apps that don't share code or a database with the products
+above.
+
 Each lives in its own App Router route group with its own chrome
 (`app/(marketing)` and `app/(cohort)`), so neither can affect the other's
 layout or styling.
